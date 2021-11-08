@@ -36,7 +36,7 @@ app.all("*", (req, res, next) => {
   return next(new AppError(404, "Page not found"));
 });
 app.use(globalErrorHandler);
-app.listen(process.env.PORT || 8000, () =>
+app.listen(process.env.PORT || 3000, () =>
   console.log(`App started on port ${process.env.PORT}`)
 );
 module.exports = app;
