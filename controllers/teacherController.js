@@ -1,6 +1,7 @@
 const Exam = require("../models/Exam");
 const catchAsync = require("../utils/catchAsync");
 const Result = require("../models/Result");
+const mongoose = require("mongoose");
 const AppError = require("../utils/AppError");
 
 exports.createExam = catchAsync(async (req, res, next) => {
@@ -15,8 +16,13 @@ exports.createExam = catchAsync(async (req, res, next) => {
 });
 
 exports.getResults = catchAsync(async (req, res, next) => {
-  const results = await Result.find({ examId: req.params.id });
-  if (!results) return next(new AppError(404, "No results found"));
+  const results = await Result.find({
+    examId: mongoose.Types.ObjectId(req.params.id),
+  })
+    .populate("examId")
+    .populate("submittedBy");
+  console.log(req.params, results);
+  if (!results?.length) return next(new AppError(404, "No results found"));
   res.status(200).json({
     status: "success",
     data: {
@@ -25,10 +31,14 @@ exports.getResults = catchAsync(async (req, res, next) => {
   });
 });
 exports.getResult = catchAsync(async (req, res, next) => {
+  if (req.params.studentId.length !== 24 || req.params.examId.length !== 24)
+    return next(new AppError(404, "No such result found"));
   const result = await Result.findOne({
     submittedBy: req.params.studentId,
     examId: req.params.examId,
-  });
+  })
+    .populate("examId")
+    .populate("submittedBy");
   if (!result) return next(new AppError(404, "No such result found"));
   res.status(200).json({
     status: "success",

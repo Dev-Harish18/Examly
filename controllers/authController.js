@@ -16,7 +16,7 @@ function createAndSendToken(user, statusCode, req, res) {
       Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     sameSite: "None",
-    secure: false,
+    secure: true,
   });
 
   user.password = undefined;

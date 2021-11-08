@@ -16,7 +16,7 @@ const examSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  minMark: {
+  minMarks: {
     type: "Number",
     required: [true, "Minimum marks required to pass must be entered"],
   },
@@ -26,7 +26,7 @@ const examSchema = new mongoose.Schema({
         type: String,
         required: [true, "Question can't be empty"],
       },
-      maxMark: {
+      maxMarks: {
         type: Number,
         required: [true, "Maximum marks for the Question must be entered"],
       },
@@ -38,11 +38,7 @@ const examSchema = new mongoose.Schema({
         type: String,
         required: [true, "Model answer must be entered"],
       },
-      keywords: [
-        {
-          type: String,
-        },
-      ],
+      keywords: String,
       minLength: Number,
       maxLength: Number,
     },
@@ -51,9 +47,9 @@ const examSchema = new mongoose.Schema({
     type: Date,
     required: [true, "Start time of the examination must be entered"],
   },
-  duration: {
-    type: Number,
-    required: [true, "Duration of the examination must be entered"],
+  endTime: {
+    type: Date,
+    required: [true, "End time of the examination must be entered"],
   },
   maxMarks: Number,
   instructions: [

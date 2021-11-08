@@ -16,7 +16,7 @@ connectDB();
 //cors
 const corsOptions = {
   //To allow requests from client
-  origin: ["http://localhost:3001"],
+  origin: true,
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -30,12 +30,13 @@ app.use("/api/v1/eval", evalRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/teacher", teacherRouter);
 app.use("/api/v1/student", studentRouter);
+
 //Listening to server
 app.all("*", (req, res, next) => {
   return next(new AppError(404, "Page not found"));
 });
 app.use(globalErrorHandler);
-app.listen(process.env.PORT || 3000, () =>
+app.listen(process.env.PORT || 8000, () =>
   console.log(`App started on port ${process.env.PORT}`)
 );
 module.exports = app;
