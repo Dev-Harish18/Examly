@@ -44,11 +44,11 @@ const examSchema = new mongoose.Schema({
     },
   ],
   startTime: {
-    type: Date,
+    type: String,
     required: [true, "Start time of the examination must be entered"],
   },
   endTime: {
-    type: Date,
+    type: String,
     required: [true, "End time of the examination must be entered"],
   },
   maxMarks: Number,
