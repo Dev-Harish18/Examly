@@ -16,7 +16,6 @@ const userSchema = new mongoose.Schema({
   roll: {
     type: String,
     trim: true,
-    unique: true,
   },
   role: {
     type: String,

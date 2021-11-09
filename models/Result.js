@@ -8,6 +8,11 @@ const resultSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  answers: [
+    {
+      type: String,
+    },
+  ],
   marks: [
     {
       type: Number,

@@ -87,6 +87,7 @@ exports.submitExam = catchAsync(async (req, res, next) => {
     examId: req.params.id,
     submittedBy: req.user._id,
     marks,
+    answers,
     score: studentMarks,
     percentage,
     status,
