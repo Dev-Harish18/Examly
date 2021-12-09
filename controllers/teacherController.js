@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const AppError = require("../utils/AppError");
 
 exports.createExam = catchAsync(async (req, res, next) => {
-  const exam = await Exam.create(req.body);
+  const exam = await Exam.create({ ...req.body, createdBy: req.user._id });
 
   res.status(201).json({
     status: "success",
@@ -30,6 +30,23 @@ exports.getResults = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getExams = catchAsync(async (req, res, next) => {
+  const exams = await Exam.find({
+    createdBy: req.user._id,
+  }).populate("createdBy");
+
+  console.log("Exams", exams);
+
+  if (!exams?.length) return next(new AppError(404, "No exams found"));
+  res.status(200).json({
+    status: "success",
+    data: {
+      exams,
+    },
+  });
+});
+
 exports.getResult = catchAsync(async (req, res, next) => {
   if (req.params.studentId.length !== 24 || req.params.examId.length !== 24)
     return next(new AppError(404, "No such result found"));

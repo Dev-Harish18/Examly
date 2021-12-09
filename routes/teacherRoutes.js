@@ -6,6 +6,7 @@ const authController = require("../controllers/authController");
 
 router.use(authController.mustBeLoggedIn, authController.restrict);
 router.route("/create").post(teacherController.createExam);
+router.route("/exams").get(teacherController.getExams);
 
 router
   .route("/results/:id")
